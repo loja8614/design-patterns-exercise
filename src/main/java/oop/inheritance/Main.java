@@ -1,11 +1,31 @@
 package oop.inheritance;
 
 import oop.inheritance.data.SupportedTerminal;
+import oop.inheritance.factories.*;
 
 public class Main {
 
     public static void main(String[] args) {
-        Application application = new Application(SupportedTerminal.INGENICO);
+
+        SupportedTerminal supportedTerminal = SupportedTerminal.INGENICO;
+
+        TerminalFactory factory;
+
+        if(SupportedTerminal.INGENICO == supportedTerminal ){
+            factory = new IngenicoFactory();
+        }else if(SupportedTerminal.VERIFONE240 == supportedTerminal){
+            factory = new Verifone240Factory();
+        }else if(SupportedTerminal.VERIFONE520 == supportedTerminal){
+            factory = new Verifone520Factory();
+        }else if(SupportedTerminal.VERIFONE690 == supportedTerminal){
+            factory = new Verifone690Factory();
+        }else
+        {
+            factory = new IngenicoFactory();
+            System.out.println("There is not terminal supported The transaction will be Ingenico ");
+        }
+
+        Application application = Application.getInstance(factory);
 
         while (true) {
             run(application);

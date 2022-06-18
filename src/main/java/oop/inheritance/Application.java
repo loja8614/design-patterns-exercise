@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 
 import oop.inheritance.data.CommunicationType;
 import oop.inheritance.data.SupportedTerminal;
+import oop.inheritance.factories.TerminalFactory;
+import oop.inheritance.transaction.TransactionBuilder;
 import oop.library.ingenico.model.Card;
 import oop.library.ingenico.model.Transaction;
 import oop.library.ingenico.model.TransactionResponse;
@@ -12,47 +14,42 @@ import oop.library.v240m.VerifoneV240mDisplay;
 
 public class Application {
 
+    private static Application application;
     private CommunicationType communicationType = CommunicationType.ETHERNET;
-    private SupportedTerminal supportedTerminal;
+    private TerminalFactory factory;
 
-    public Application(SupportedTerminal supportedTerminal) {
-        this.supportedTerminal = supportedTerminal;
+    private Application(TerminalFactory factory) {
+        this.factory = factory;
+    }
+
+    public static Application getInstance(TerminalFactory factory) {
+        if (application == null) {
+            application = new Application(factory);
+        } else {
+            System.out.println("There is a current active instance of Application");
+        }
+
+        return application;
     }
 
     public void showMenu() {
-        if (supportedTerminal == SupportedTerminal.INGENICO) {
-            IngenicoDisplay ingenicoDisplay = new IngenicoDisplay();
-
-            ingenicoDisplay.showMessage(5, 5, "MENU");
-            ingenicoDisplay.showMessage(5, 10, "1. VENTA");
-            ingenicoDisplay.showMessage(5, 13, "2. DEVOLUCION");
-            ingenicoDisplay.showMessage(5, 16, "3. REPORTE");
-            ingenicoDisplay.showMessage(5, 23, "4. CONFIGURACION");
-        } else {
-            VerifoneV240mDisplay verifoneV240mDisplay = new VerifoneV240mDisplay();
-
-            verifoneV240mDisplay.print(5, 5, "MENU");
-            verifoneV240mDisplay.print(5, 10, "1. VENTA");
-            verifoneV240mDisplay.print(5, 13, "2. DEVOLUCION");
-            verifoneV240mDisplay.print(5, 16, "3. REPORTE");
-            verifoneV240mDisplay.print(5, 23, "4. CONFIGURACION");
-        }
-
+        factory.createTerminal().showMenu();
     }
 
     public String readKey() {
-        IngenicoKeyboard ingenicoKeyboard = new IngenicoKeyboard();
-
-        return ingenicoKeyboard.getChar();
+        return factory.createTerminal().readKey();
     }
 
     public void doSale() {
+
+        //Esta construcción con estategy
         IngenicoCardSwipper cardSwipper = new IngenicoCardSwipper();
         IngenicoChipReader chipReader = new IngenicoChipReader();
         IngenicoDisplay ingenicoDisplay = new IngenicoDisplay();
         IngenicoKeyboard ingenicoKeyboard = new IngenicoKeyboard();
         Card card;
 
+        //modificar para instruccion lambda o flecha
         do {
             card = cardSwipper.readCard();
             if (card == null) {
@@ -60,17 +57,14 @@ public class Application {
             }
         } while (card == null);
 
+
         ingenicoDisplay.clear();
         ingenicoDisplay.showMessage(5, 20, "Capture monto:");
 
         String amount = ingenicoKeyboard.readLine(); //Amount with decimal point as string
 
-        Transaction transaction = new Transaction();
-
-        transaction.setLocalDateTime(LocalDateTime.now());
-        transaction.setCard(card);
-        transaction.setAmountInCents(Integer.parseInt(amount.replace(".", "")));
-
+        TransactionBuilder builder = new TransactionBuilder(card);
+        Transaction transaction = builder.amountInCents(Integer.parseInt(amount.replace(".", ""))).localTime(LocalDateTime.now()).build();
         TransactionResponse response = sendSale(transaction);
 
         if (response.isApproved()) {
@@ -135,14 +129,6 @@ public class Application {
     }
 
     public void clearScreen() {
-        if (supportedTerminal == SupportedTerminal.INGENICO) {
-            IngenicoDisplay ingenicoDisplay = new IngenicoDisplay();
-
-            ingenicoDisplay.clear();
-        } else {
-            VerifoneV240mDisplay verifoneV240mDisplay = new VerifoneV240mDisplay();
-
-            verifoneV240mDisplay.clear();
-        }
+        factory.createTerminal().clearScreen();
     }
 }
