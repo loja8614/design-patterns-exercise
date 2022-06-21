@@ -1,5 +1,6 @@
 package oop.inheritance;
 
+import oop.inheritance.data.CommunicationType;
 import oop.inheritance.data.SupportedTerminal;
 import oop.inheritance.factories.*;
 
@@ -8,6 +9,7 @@ public class Main {
     public static void main(String[] args) {
 
         SupportedTerminal supportedTerminal = SupportedTerminal.INGENICO;
+        CommunicationType communicationType = CommunicationType.ETHERNET;
 
         TerminalFactory factory;
 
@@ -25,7 +27,7 @@ public class Main {
             System.out.println("There is not terminal supported The transaction will be Ingenico ");
         }
 
-        Application application = Application.getInstance(factory);
+        Application application = Application.getInstance(factory,communicationType);
 
         while (true) {
             run(application);

@@ -5,7 +5,5 @@ public interface ITerminal {
     void showMenu();
     void doSale();
     void clearScreen();
-    void printReceipt();
-    void sendSale();
 
 }

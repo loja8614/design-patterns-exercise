@@ -31,13 +31,4 @@ public class Verifone690 implements ITerminal {
         verifoneV690Display.clear();
     }
 
-    @Override
-    public void printReceipt() {
-
-    }
-
-    @Override
-    public void sendSale() {
-
-    }
 }

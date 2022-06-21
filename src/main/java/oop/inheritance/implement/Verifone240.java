@@ -1,6 +1,8 @@
 package oop.inheritance.implement;
 
 import oop.inheritance.factories.ITerminal;
+import oop.library.v240m.VerifoneV240mCardSwipper;
+import oop.library.v240m.VerifoneV240mChipReader;
 import oop.library.v240m.VerifoneV240mDisplay;
 import oop.library.v240m.VerifoneV240mKeyboard;
 
@@ -26,6 +28,12 @@ public class Verifone240 implements ITerminal {
 
     @Override
     public void doSale() {
+        VerifoneV240mCardSwipper cardSwipper = new VerifoneV240mCardSwipper();
+        VerifoneV240mChipReader chipReader = new VerifoneV240mChipReader();
+        VerifoneV240mDisplay verifoneDisplay = new VerifoneV240mDisplay();
+        VerifoneV240mKeyboard verifoneKeyboard = new VerifoneV240mKeyboard();
+
+
 
     }
 
@@ -34,13 +42,5 @@ public class Verifone240 implements ITerminal {
         verifoneV240mDisplay.clear();
     }
 
-    @Override
-    public void printReceipt() {
 
-    }
-
-    @Override
-    public void sendSale() {
-
-    }
 }

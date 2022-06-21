@@ -32,13 +32,5 @@ public class Verifone520 implements ITerminal {
         verifoneV520Display.clear();
     }
 
-    @Override
-    public void printReceipt() {
 
-    }
-
-    @Override
-    public void sendSale() {
-
-    }
 }
