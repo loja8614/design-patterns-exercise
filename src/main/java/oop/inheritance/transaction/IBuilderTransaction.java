@@ -1,6 +1,7 @@
 package oop.inheritance.transaction;
 
-import oop.library.ingenico.model.Transaction;
+
+import oop.inheritance.model.Transaction;
 
 public interface IBuilderTransaction {
     Transaction build();

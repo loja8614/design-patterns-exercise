@@ -11,23 +11,8 @@ public class Main {
         SupportedTerminal supportedTerminal = SupportedTerminal.INGENICO;
         CommunicationType communicationType = CommunicationType.ETHERNET;
 
-        TerminalFactory factory;
-
-        if(SupportedTerminal.INGENICO == supportedTerminal ){
-            factory = new IngenicoFactory();
-        }else if(SupportedTerminal.VERIFONE240 == supportedTerminal){
-            factory = new Verifone240Factory();
-        }else if(SupportedTerminal.VERIFONE520 == supportedTerminal){
-            factory = new Verifone520Factory();
-        }else if(SupportedTerminal.VERIFONE690 == supportedTerminal){
-            factory = new Verifone690Factory();
-        }else
-        {
-            factory = new IngenicoFactory();
-            System.out.println("There is not terminal supported The transaction will be Ingenico ");
-        }
-
-        Application application = Application.getInstance(factory,communicationType);
+        TerminalFactory factory = TerminalFactory.getInstance(supportedTerminal);
+        Application application = new Application(factory, communicationType);
 
         while (true) {
             run(application);

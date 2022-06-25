@@ -1,7 +1,8 @@
 package oop.inheritance.transaction;
 
-import oop.library.ingenico.model.Card;
-import oop.library.ingenico.model.Transaction;
+
+import oop.inheritance.model.Card;
+import oop.inheritance.model.Transaction;
 
 import java.time.LocalDateTime;
 
