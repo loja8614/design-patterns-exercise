@@ -28,4 +28,5 @@ public class CardBuilder {
     public Card build() {
         return new Card(this.account, this.expirationDate, this.entryMode);
     }
+
 }

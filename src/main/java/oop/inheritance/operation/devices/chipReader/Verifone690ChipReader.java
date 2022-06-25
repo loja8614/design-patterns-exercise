@@ -1,6 +1,8 @@
 package oop.inheritance.operation.devices.chipReader;
 
+import oop.inheritance.data.EntryMode;
 import oop.inheritance.model.Card;
+import oop.inheritance.model.ExpirationDate;
 import oop.inheritance.operation.ChipReader;
 import oop.library.vx690.VerifoneVx690ChipReader;
 
@@ -14,7 +16,7 @@ public class Verifone690ChipReader implements ChipReader {
     }
     @Override
     public Card readCard() {
-        //byte[] card = Serializer.serialize(chipReader.readCard());
-        return null;//(Card) Serializer.deserialize(card);
+        chipReader.readCard();
+        return Card.builder().account("4558211532252558").entryMode(EntryMode.INSERTED).expirationDate(ExpirationDate.builder().year(20).month(8).build()).build();
     }
 }
