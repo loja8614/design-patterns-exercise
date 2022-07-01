@@ -6,16 +6,20 @@ import oop.library.vx520.VerifoneVx520Printer;
 public class Verifone520Printer implements Printer {
     private VerifoneVx520Printer verifoneVx520Printer = new VerifoneVx520Printer();
 
-    public Verifone520Printer() {
+    private Verifone520Printer() {
 
     }
-
-    private static final class UniqueInstanceHolder {
-        private static final Verifone520Printer uniqueInstance = new Verifone520Printer();
-    }
+    private static Verifone520Printer uniqueInstance;
 
     public static Verifone520Printer getInstance() {
-        return UniqueInstanceHolder.uniqueInstance;
+        if (uniqueInstance == null) {
+            synchronized (Verifone520Printer.class) {
+                if (uniqueInstance == null) {
+                    uniqueInstance = new Verifone520Printer();
+                }
+            }
+        }
+        return uniqueInstance;
     }
 
 

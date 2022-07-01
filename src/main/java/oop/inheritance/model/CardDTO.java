@@ -2,12 +2,12 @@ package oop.inheritance.model;
 
 import oop.inheritance.data.EntryMode;
 
-public class Card {
+public class CardDTO {
     private final String account;
-    private final ExpirationDate expirationDate;
+    private final ExpirationDateDTO expirationDate;
     private final EntryMode entryMode;
 
-    public Card(String account, ExpirationDate expirationDate, EntryMode entryMode) {
+    public CardDTO(String account, ExpirationDateDTO expirationDate, EntryMode entryMode) {
         this.account = account;
         this.expirationDate = expirationDate;
         this.entryMode = entryMode;
@@ -17,7 +17,7 @@ public class Card {
         return this.account;
     }
 
-    public ExpirationDate getExpirationDate() {
+    public ExpirationDateDTO getExpirationDate() {
         return this.expirationDate;
     }
 
@@ -25,7 +25,7 @@ public class Card {
         return this.entryMode;
     }
 
-    public static CardBuilder builder() {
-        return new CardBuilder();
+    public static CardBuilderDTO builder() {
+        return new CardBuilderDTO();
     }
 }

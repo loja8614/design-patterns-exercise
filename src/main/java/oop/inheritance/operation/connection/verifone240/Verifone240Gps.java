@@ -1,21 +1,28 @@
 package oop.inheritance.operation.connection.verifone240;
 
 import oop.inheritance.operation.connection.Communication;
-import oop.inheritance.model.Transaction;
-import oop.inheritance.model.TransactionResponse;
+import oop.inheritance.model.TransactionDTO;
+import oop.inheritance.model.TransactionResponseDTO;
 import oop.inheritance.transaction.Serializer;
 import oop.library.v240m.VerifoneV240mGPS;
 
 public class Verifone240Gps implements Communication {
 
     private VerifoneV240mGPS verifoneV240mGPS = new VerifoneV240mGPS();
+    private Verifone240Gps(){
 
-    private static final class UniqueInstanceHolder {
-        private static final Verifone240Gps uniqueInstance = new Verifone240Gps();
     }
+    private static Verifone240Gps uniqueInstance;
 
     public static Verifone240Gps getInstance() {
-        return UniqueInstanceHolder.uniqueInstance;
+        if (uniqueInstance == null) {
+            synchronized (Verifone240Gps.class) {
+                if (uniqueInstance == null) {
+                    uniqueInstance = new Verifone240Gps();
+                }
+            }
+        }
+        return uniqueInstance;
     }
 
     @Override
@@ -24,13 +31,13 @@ public class Verifone240Gps implements Communication {
     }
 
     @Override
-    public void send(Transaction transaction) {
+    public void send(TransactionDTO transaction) {
         verifoneV240mGPS.send(Serializer.serialize(transaction));
     }
 
     @Override
-    public TransactionResponse receive() {
-        return (TransactionResponse) Serializer.deserialize(verifoneV240mGPS.receive());
+    public TransactionResponseDTO receive() {
+        return (TransactionResponseDTO) Serializer.deserialize(verifoneV240mGPS.receive());
     }
 
     @Override

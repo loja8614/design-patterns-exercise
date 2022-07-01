@@ -17,33 +17,33 @@ import oop.inheritance.operation.devices.print.Verifone690Printer;
 public class Verifone690Factory extends TerminalFactory {
     @Override
     public Display getDisplay() {
-        return new Verifone690Display();
+        return Verifone690Display.getInstance();
     }
 
     @Override
     public KeyBoard getKeyBoard() {
-        return new Verifone690KeyBoard();
+        return Verifone690KeyBoard.getInstance();
     }
 
     @Override
     public Printer printer() {
-        return new Verifone690Printer();
+        return Verifone690Printer.getInstance();
     }
 
     @Override
     public ChipReader chipReader() {
-        return new Verifone690ChipReader();
+        return Verifone690ChipReader.getInstance();
     }
 
     @Override
     public Communication getConnection(CommunicationType communicationType) {
         switch (communicationType) {
             case GPS:
-                return new Verifone690Gps();
+                return Verifone690Gps.getInstance();
             case MODEM:
-                return new Verifone690Modem();
+                return Verifone690Modem.getInstance();
             default:
-                return new Verifone690Ethernet();
+                return Verifone690Ethernet.getInstance();
         }
     }
 }

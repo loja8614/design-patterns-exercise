@@ -4,18 +4,25 @@ import oop.inheritance.operation.Display;
 import oop.library.v240m.VerifoneV240mDisplay;
 
 public class Verifone240mDisplay implements Display {
+
     private VerifoneV240mDisplay verifoneV240mDisplay = new VerifoneV240mDisplay();
 
-    public Verifone240mDisplay() {
+    private Verifone240mDisplay() {
 
     }
 
-    private static final class UniqueInstanceHolder {
-        private static final Verifone240mDisplay uniqueInstance = new Verifone240mDisplay();
-    }
+    private static Verifone240mDisplay uniqueInstance;
 
     public static Verifone240mDisplay getInstance() {
-        return UniqueInstanceHolder.uniqueInstance;
+        if (uniqueInstance == null) {
+            synchronized (Verifone240mDisplay.class) {
+                if (uniqueInstance == null) {
+                    uniqueInstance = new Verifone240mDisplay();
+                }
+            }
+        }
+
+        return uniqueInstance;
     }
 
     @Override

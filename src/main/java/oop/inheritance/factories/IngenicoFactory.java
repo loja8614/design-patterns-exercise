@@ -18,22 +18,22 @@ import oop.inheritance.operation.devices.print.IngenicoPrinter;
 public class IngenicoFactory extends TerminalFactory{
 
     public Display getDisplay() {
-         return  new  IngenicoDisplay();
+         return  IngenicoDisplay.getInstance();
     }
 
     @Override
     public KeyBoard getKeyBoard() {
-        return new IngenicoKeyBoard();
+        return IngenicoKeyBoard.getInstance();
     }
 
     @Override
     public Printer printer() {
-        return new IngenicoPrinter();
+        return IngenicoPrinter.getInstance();
     }
 
     @Override
     public ChipReader chipReader() {
-        return new IngenicoChipReader();
+        return IngenicoChipReader.getInstance();
     }
 
     @Override
@@ -41,11 +41,11 @@ public class IngenicoFactory extends TerminalFactory{
 
         switch (communicationType) {
             case GPS:
-                return  new IngenicoGps();
+                return  IngenicoGps.getInstance();
             case MODEM:
-                return  new IngenicoModem();
+                return  IngenicoModem.getInstance();
             default:
-                return new IngenicoEthernet();
+                return IngenicoEthernet.getInstance();
         }
 
 

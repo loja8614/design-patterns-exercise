@@ -1,18 +1,23 @@
 package oop.inheritance.operation.connection.ingenico;
 
 import oop.inheritance.operation.connection.Communication;
-import oop.inheritance.model.Transaction;
-import oop.inheritance.model.TransactionResponse;
+import oop.inheritance.model.TransactionDTO;
+import oop.inheritance.model.TransactionResponseDTO;
 
 public class IngenicoEthernet implements Communication {
     private IngenicoEthernet ethernet = new IngenicoEthernet();
-
-    private static final class UniqueInstanceHolder {
-        private static final IngenicoEthernet uniqueInstance = new IngenicoEthernet();
-    }
+    private IngenicoEthernet(){}
+    private static IngenicoEthernet uniqueInstance;
 
     public static IngenicoEthernet getInstance() {
-        return UniqueInstanceHolder.uniqueInstance;
+        if (uniqueInstance ==null){
+            synchronized (IngenicoEthernet.class){
+                if(uniqueInstance==null){
+                    uniqueInstance=new IngenicoEthernet();
+                }
+            }
+        }
+        return uniqueInstance;
     }
 
     @Override
@@ -21,12 +26,12 @@ public class IngenicoEthernet implements Communication {
     }
 
     @Override
-    public void send(Transaction transaction) {
+    public void send(TransactionDTO transaction) {
         ethernet.send(transaction);
     }
 
     @Override
-    public TransactionResponse receive() {
+    public TransactionResponseDTO receive() {
         return ethernet.receive();
     }
 

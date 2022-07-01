@@ -2,21 +2,28 @@ package oop.inheritance.operation.devices.displays;
 
 import oop.inheritance.operation.Display;
 import oop.library.vx520.VerifoneVx520Display;
+import oop.library.vx690.VerifoneVx690Display;
 
 public class Verifone520Display implements Display {
 
     private VerifoneVx520Display verifoneV520Display = new VerifoneVx520Display();
 
-    public Verifone520Display() {
+    private Verifone520Display() {
 
     }
 
-    private static final class UniqueInstanceHolder {
-        private static final Verifone520Display uniqueInstance = new Verifone520Display();
-    }
+    private static Verifone520Display uniqueInstance;
 
     public static Verifone520Display getInstance() {
-        return UniqueInstanceHolder.uniqueInstance;
+
+        if (uniqueInstance == null) {
+            synchronized (VerifoneVx690Display.class) {
+                if (uniqueInstance == null) {
+                    uniqueInstance = new Verifone520Display();
+                }
+            }
+        }
+        return uniqueInstance;
     }
 
     @Override

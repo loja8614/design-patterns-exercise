@@ -1,34 +1,43 @@
 package oop.inheritance.operation.connection.verifone520;
 
 import oop.inheritance.operation.connection.Communication;
-import oop.inheritance.model.Transaction;
-import oop.inheritance.model.TransactionResponse;
+import oop.inheritance.model.TransactionDTO;
+import oop.inheritance.model.TransactionResponseDTO;
 import oop.inheritance.transaction.Serializer;
 import oop.library.vx520.VerifoneVx520Ethernet;
 
 public class Verifone520Ethernet implements Communication {
     private VerifoneVx520Ethernet verifoneVx520Ethernet = new VerifoneVx520Ethernet();
 
-    private static final class UniqueInstanceHolder {
-        private static final Verifone520Ethernet uniqueInstance = new Verifone520Ethernet();
+    private Verifone520Ethernet() {
     }
 
+    private static Verifone520Ethernet uniqueInstance;
+
     public static Verifone520Ethernet getInstance() {
-        return UniqueInstanceHolder.uniqueInstance;
+        if (uniqueInstance == null) {
+            synchronized (Verifone520Ethernet.class) {
+                if (uniqueInstance == null) {
+                    uniqueInstance = new Verifone520Ethernet();
+                }
+            }
+        }
+        return uniqueInstance;
     }
+
     @Override
     public void open() {
         verifoneVx520Ethernet.open();
     }
 
     @Override
-    public void send(Transaction transaction) {
+    public void send(TransactionDTO transaction) {
         verifoneVx520Ethernet.send(Serializer.serialize(transaction));
     }
 
     @Override
-    public TransactionResponse receive() {
-        return (TransactionResponse) Serializer.deserialize(verifoneVx520Ethernet.receive());
+    public TransactionResponseDTO receive() {
+        return (TransactionResponseDTO) Serializer.deserialize(verifoneVx520Ethernet.receive());
     }
 
     @Override

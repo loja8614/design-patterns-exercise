@@ -7,16 +7,20 @@ import oop.library.v240m.VerifoneV240mPrinter;
 public class Verifone240mPrinter implements Printer {
     private VerifoneV240mPrinter verifonePrinter = new VerifoneV240mPrinter();
 
-    public Verifone240mPrinter() {
+    private Verifone240mPrinter() {
 
     }
-
-    private static final class UniqueInstanceHolder {
-        private static final Verifone240mPrinter uniqueInstance = new Verifone240mPrinter();
-    }
+    private static Verifone240mPrinter uniqueInstance ;
 
     public static Verifone240mPrinter getInstance() {
-        return UniqueInstanceHolder.uniqueInstance;
+        if (uniqueInstance == null) {
+            synchronized (Verifone240mPrinter.class) {
+                if (uniqueInstance == null) {
+                    uniqueInstance = new Verifone240mPrinter();
+                }
+            }
+        }
+        return uniqueInstance;
     }
 
     @Override

@@ -1,10 +1,10 @@
 package oop.inheritance.model;
 
-public class ExpirationDate {
+public class ExpirationDateDTO {
     private final int year;
     private final int month;
 
-    public ExpirationDate(int year, int month) {
+    public ExpirationDateDTO(int year, int month) {
         this.year = year;
         this.month = month;
     }
@@ -17,7 +17,7 @@ public class ExpirationDate {
         return this.month;
     }
 
-    public static ExpirationDateBuilder builder() {
-        return new ExpirationDateBuilder();
+    public static ExpirationDateBuilderDTO builder() {
+        return new ExpirationDateBuilderDTO();
     }
 }

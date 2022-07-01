@@ -1,21 +1,30 @@
 package oop.inheritance.operation.connection.verifone240;
 
 import oop.inheritance.operation.connection.Communication;
-import oop.inheritance.model.Transaction;
-import oop.inheritance.model.TransactionResponse;
+import oop.inheritance.model.TransactionDTO;
+import oop.inheritance.model.TransactionResponseDTO;
 import oop.inheritance.transaction.Serializer;
-import oop.library.v240m.VerifoneV240mModem;
+import oop.library.v240m.*;
 
 public class Verifone240Modem implements Communication {
 
     private VerifoneV240mModem verifoneV240mModem = new VerifoneV240mModem();
 
-    private static final class UniqueInstanceHolder {
-        private static final Verifone240Modem uniqueInstance = new Verifone240Modem();
+    private Verifone240Modem() {
+
     }
 
+    private static Verifone240Modem uniqueInstance;
+
     public static Verifone240Modem getInstance() {
-        return UniqueInstanceHolder.uniqueInstance;
+        if (uniqueInstance == null) {
+            synchronized (Verifone240Modem.class) {
+                if (uniqueInstance == null) {
+                    uniqueInstance = new Verifone240Modem();
+                }
+            }
+        }
+        return uniqueInstance;
     }
 
     @Override
@@ -24,13 +33,13 @@ public class Verifone240Modem implements Communication {
     }
 
     @Override
-    public void send(Transaction transaction) {
+    public void send(TransactionDTO transaction) {
         verifoneV240mModem.send(Serializer.serialize(transaction));
     }
 
     @Override
-    public TransactionResponse receive() {
-        return (TransactionResponse) Serializer.deserialize(verifoneV240mModem.receive());
+    public TransactionResponseDTO receive() {
+        return (TransactionResponseDTO) Serializer.deserialize(verifoneV240mModem.receive());
     }
 
     @Override

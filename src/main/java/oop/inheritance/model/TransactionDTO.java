@@ -1,13 +1,15 @@
 package oop.inheritance.model;
 
+import oop.library.ingenico.model.Transaction;
+
 import java.time.LocalDateTime;
 
-public class Transaction {
+public class TransactionDTO {
     private int amountInCents;
-    private Card card;
+    private CardDTO card;
     private LocalDateTime localDateTime;
 
-    public Transaction() {
+    public TransactionDTO() {
     }
 
     public int getAmountInCents() {
@@ -18,11 +20,11 @@ public class Transaction {
         this.amountInCents = amountInCents;
     }
 
-    public Card getCard() {
+    public CardDTO getCard() {
         return this.card;
     }
 
-    public void setCard(Card card) {
+    public void setCard(CardDTO card) {
         this.card = card;
     }
 

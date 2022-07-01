@@ -1,18 +1,23 @@
 package oop.inheritance.operation.connection.ingenico;
 
 import oop.inheritance.operation.connection.Communication;
-import oop.inheritance.model.Transaction;
-import oop.inheritance.model.TransactionResponse;
+import oop.inheritance.model.TransactionDTO;
+import oop.inheritance.model.TransactionResponseDTO;
 
 public class IngenicoModem implements Communication {
     private IngenicoModem modem = new IngenicoModem();
-
-    private static final class UniqueInstanceHolder {
-        private static final IngenicoModem uniqueInstance = new IngenicoModem();
-    }
+    private IngenicoModem(){}
+    private static IngenicoModem uniqueInstance ;
 
     public static IngenicoModem getInstance() {
-        return UniqueInstanceHolder.uniqueInstance;
+        if (uniqueInstance ==null){
+            synchronized (IngenicoModem.class){
+                if(uniqueInstance==null){
+                    uniqueInstance=new IngenicoModem();
+                }
+            }
+        }
+        return uniqueInstance;
     }
 
     @Override
@@ -21,12 +26,12 @@ public class IngenicoModem implements Communication {
     }
 
     @Override
-    public void send(Transaction transaction) {
+    public void send(TransactionDTO transaction) {
         modem.send(transaction);
     }
 
     @Override
-    public TransactionResponse receive() {
+    public TransactionResponseDTO receive() {
         return modem.receive();
     }
 

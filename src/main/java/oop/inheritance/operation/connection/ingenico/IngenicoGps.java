@@ -1,19 +1,25 @@
 package oop.inheritance.operation.connection.ingenico;
 
 import oop.inheritance.operation.connection.Communication;
-import oop.inheritance.model.Transaction;
-import oop.inheritance.model.TransactionResponse;
+import oop.inheritance.model.TransactionDTO;
+import oop.inheritance.model.TransactionResponseDTO;
 import oop.library.ingenico.services.IngenicoGPS;
 
 public class IngenicoGps implements Communication {
     private IngenicoGPS gps = new IngenicoGPS();
 
-    private static final class UniqueInstanceHolder {
-        private static final IngenicoGps uniqueInstance = new IngenicoGps();
-    }
+    private IngenicoGps(){}
+    private static  IngenicoGps uniqueInstance ;
 
     public static IngenicoGps getInstance() {
-        return UniqueInstanceHolder.uniqueInstance;
+        if (uniqueInstance ==null){
+            synchronized (IngenicoGps.class){
+                if(uniqueInstance==null){
+                    uniqueInstance=new IngenicoGps();
+                }
+            }
+        }
+        return uniqueInstance;
     }
 
     @Override
@@ -22,13 +28,13 @@ public class IngenicoGps implements Communication {
     }
 
     @Override
-    public void send(Transaction transaction) {
-        gps.send(transaction);
+    public void send(TransactionDTO transaction) {
+        //gps.send(transaction);
     }
 
     @Override
-    public TransactionResponse receive() {
-        return (TransactionResponse) gps.receive();
+    public TransactionResponseDTO receive() {
+        return null;//(TransactionResponseDTO) gps.receive();
     }
 
     @Override

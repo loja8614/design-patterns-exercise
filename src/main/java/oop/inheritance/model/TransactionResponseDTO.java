@@ -1,10 +1,10 @@
 package oop.inheritance.model;
 
-public class TransactionResponse {
+public class TransactionResponseDTO {
     private boolean approved;
     private String hostReference;
 
-    public TransactionResponse(boolean approved, String hostReference) {
+    public TransactionResponseDTO(boolean approved, String hostReference) {
         this.approved = approved;
         this.hostReference = hostReference;
     }

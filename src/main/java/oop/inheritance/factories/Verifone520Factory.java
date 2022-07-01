@@ -19,33 +19,33 @@ public class Verifone520Factory extends TerminalFactory {
 
     @Override
     public Display getDisplay() {
-        return new Verifone520Display();
+        return Verifone520Display.getInstance();
     }
 
     @Override
     public KeyBoard getKeyBoard() {
-        return new Verifone520KeyBoard();
+        return Verifone520KeyBoard.getInstance();
     }
 
     @Override
     public Printer printer() {
-        return new Verifone520Printer();
+        return Verifone520Printer.getInstance();
     }
 
     @Override
     public ChipReader chipReader() {
-        return new Verifone520ChipReader();
+        return Verifone520ChipReader.getInstance();
     }
 
     @Override
     public Communication getConnection(CommunicationType communicationType) {
         switch (communicationType) {
             case GPS:
-                return new Verifone520Gps();
+                return Verifone520Gps.getInstance();
             case MODEM:
-                return new Verifone520Modem();
+                return Verifone520Modem.getInstance();
             default:
-                return new Verifone520Ethernet();
+                return Verifone520Ethernet.getInstance();
         }
     }
 }

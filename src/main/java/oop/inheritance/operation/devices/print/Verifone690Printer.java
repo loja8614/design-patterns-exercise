@@ -6,16 +6,21 @@ import oop.library.vx690.VerifoneVx690Printer;
 public class Verifone690Printer implements Printer {
     private VerifoneVx690Printer verifoneVx690Printer = new VerifoneVx690Printer();
 
-    public Verifone690Printer() {
+    private Verifone690Printer() {
 
     }
 
-    private static final class UniqueInstanceHolder {
-        private static final Verifone690Printer uniqueInstance = new Verifone690Printer();
-    }
+    private static Verifone690Printer uniqueInstance;
 
     public static Verifone690Printer getInstance() {
-        return UniqueInstanceHolder.uniqueInstance;
+        if (uniqueInstance == null) {
+            synchronized (Verifone690Printer.class) {
+                if (uniqueInstance == null) {
+                    uniqueInstance = new Verifone690Printer();
+                }
+            }
+        }
+        return uniqueInstance;
     }
 
     @Override

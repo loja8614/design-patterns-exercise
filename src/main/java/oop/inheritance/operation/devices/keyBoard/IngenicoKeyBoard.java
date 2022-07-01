@@ -7,16 +7,21 @@ public class IngenicoKeyBoard implements KeyBoard {
 
     private IngenicoKeyboard ingenicoKeyboard = new IngenicoKeyboard();
 
-    public IngenicoKeyBoard() {
+    private IngenicoKeyBoard() {
 
     }
 
-    private static final class UniqueInstanceHolder {
-        private static final IngenicoKeyBoard uniqueInstance = new IngenicoKeyBoard();
-    }
+    private static IngenicoKeyBoard uniqueInstance;
 
     public static IngenicoKeyBoard getInstance() {
-        return UniqueInstanceHolder.uniqueInstance;
+        if(uniqueInstance ==null){
+            synchronized (IngenicoKeyBoard.class){
+                if(uniqueInstance ==null){
+                    uniqueInstance=new IngenicoKeyBoard();
+                }
+            }
+        }
+        return uniqueInstance;
     }
 
     @Override

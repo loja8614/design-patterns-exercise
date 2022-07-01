@@ -18,33 +18,33 @@ public class Verifone240Factory extends TerminalFactory {
 
     @Override
     public Display getDisplay() {
-        return new Verifone240mDisplay();
+        return Verifone240mDisplay.getInstance();
     }
 
     @Override
     public KeyBoard getKeyBoard() {
-        return new Verifone240mKeyBoard();
+        return Verifone240mKeyBoard.getInstance();
     }
 
     @Override
     public Printer printer() {
-        return new Verifone240mPrinter();
+        return Verifone240mPrinter.getInstance();
     }
 
     @Override
     public ChipReader chipReader() {
-        return new Verifone240ChipReader();
+        return Verifone240ChipReader.getInstance();
     }
 
     @Override
     public Communication getConnection(CommunicationType communicationType) {
         switch (communicationType) {
             case GPS:
-                return new Verifone240Gps();
+                return Verifone240Gps.getInstance();
             case MODEM:
-                return new Verifone240Modem();
+                return Verifone240Modem.getInstance();
             default:
-                return new Verifone240Ethernet();
+                return Verifone240Ethernet.getInstance();
         }
     }
 }

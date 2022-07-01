@@ -1,17 +1,17 @@
 package oop.inheritance.transaction;
 
 
-import oop.inheritance.model.Card;
-import oop.inheritance.model.Transaction;
+import oop.inheritance.model.CardDTO;
+import oop.inheritance.model.TransactionDTO;
 
 import java.time.LocalDateTime;
 
 public class TransactionBuilder implements IBuilderTransaction {
     private int amountInCents;
-    private Card card;
+    private CardDTO card;
     private LocalDateTime localDateTime;
 
-    public TransactionBuilder(Card card){
+    public TransactionBuilder(CardDTO card){
         this.card=card;
 
     }
@@ -26,8 +26,8 @@ public class TransactionBuilder implements IBuilderTransaction {
     }
 
     @Override
-    public Transaction build() {
-        Transaction transaction = new Transaction();
+    public TransactionDTO build() {
+        TransactionDTO transaction = new TransactionDTO();
         transaction.setCard(this.card);
         transaction.setAmountInCents(this.amountInCents);
         transaction.setLocalDateTime(this.localDateTime);

@@ -8,16 +8,21 @@ public class Verifone690KeyBoard implements KeyBoard {
 
     private VerifoneVx690Keyboard verifoneKeyboard = new VerifoneVx690Keyboard();
 
-    public Verifone690KeyBoard() {
+    private Verifone690KeyBoard() {
 
     }
 
-    private static final class UniqueInstanceHolder {
-        private static final Verifone690KeyBoard uniqueInstance = new Verifone690KeyBoard();
-    }
+    private static Verifone690KeyBoard uniqueInstance;
 
     public static Verifone690KeyBoard getInstance() {
-        return UniqueInstanceHolder.uniqueInstance;
+        if (uniqueInstance == null) {
+            synchronized (Verifone690KeyBoard.class) {
+                if (uniqueInstance == null) {
+                    uniqueInstance = new Verifone690KeyBoard();
+                }
+            }
+        }
+        return uniqueInstance;
     }
 
     @Override

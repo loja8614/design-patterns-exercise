@@ -2,16 +2,16 @@ package oop.inheritance;
 
 import oop.inheritance.data.CommunicationType;
 import oop.inheritance.factories.TerminalFactory;
-import oop.inheritance.model.Card;
+import oop.inheritance.model.CardDTO;
 import oop.inheritance.operation.ChipReader;
 import oop.inheritance.operation.Display;
 import oop.inheritance.operation.KeyBoard;
 import oop.inheritance.operation.Printer;
 import oop.inheritance.operation.connection.Communication;
-import oop.inheritance.model.Transaction;
-import oop.inheritance.transaction.ICardProvider;
+import oop.inheritance.model.TransactionDTO;
+import oop.inheritance.transaction.CardProvider;
 import oop.inheritance.transaction.TransactionBuilder;
-import oop.inheritance.model.TransactionResponse;
+import oop.inheritance.model.TransactionResponseDTO;
 
 import java.time.LocalDateTime;
 
@@ -40,12 +40,13 @@ public class Application {
         return keyBoard.getKeyChar();
     }
 
+
     public void doSale() {
         Display display = factory.getDisplay();
         KeyBoard keyBoard = factory.getKeyBoard();
         ChipReader chipReader = factory.chipReader();
 
-        ICardProvider cardProvider = card -> {
+        CardProvider cardProvider = card -> {
             do {
 
                 card = chipReader.readCard();
@@ -58,14 +59,16 @@ public class Application {
             return card;
         };
 
+        CardDTO readCard = cardProvider.readCard(chipReader.readCard());
+
         display.clear();
         display.showMessage(5, 20, "Capture monto:");
 
         String amount = keyBoard.readLine(); //Amount with decimal point as string
 
-        TransactionBuilder builder = new TransactionBuilder((Card) cardProvider);
-        Transaction transaction = builder.amountInCents(Integer.parseInt(amount.replace(".", ""))).localTime(LocalDateTime.now()).build();
-        TransactionResponse response = sendSale(transaction, communicationType);
+        TransactionBuilder builder = new TransactionBuilder(readCard);
+        TransactionDTO transaction = builder.amountInCents(Integer.parseInt(amount.replace(".", ""))).localTime(LocalDateTime.now()).build();
+        TransactionResponseDTO response = sendSale(transaction, communicationType);
 
         if (response.isApproved()) {
             display.showMessage(5, 25, "APROBADA");
@@ -76,9 +79,9 @@ public class Application {
 
     }
 
-    private void printReceipt(Transaction transaction) {
+    private void printReceipt(TransactionDTO transaction) {
         Printer printer = factory.printer();
-        Card card = transaction.getCard();
+        CardDTO card = transaction.getCard();
         printer.print(5, "APROBADA");
         printer.lineFeed();
         printer.print(5, card.getAccount());
@@ -89,11 +92,11 @@ public class Application {
 
     }
 
-    private TransactionResponse sendSale(Transaction transaction, CommunicationType communicationType) {
+    private TransactionResponseDTO sendSale(TransactionDTO transaction, CommunicationType communicationType) {
 
         Communication communication = factory.getConnection(communicationType);
 
-        TransactionResponse transactionResponse = null;
+        TransactionResponseDTO transactionResponse = null;
         communication.open();
         communication.send(transaction);
         transactionResponse = communication.receive();

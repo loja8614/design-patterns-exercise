@@ -1,8 +1,8 @@
 package oop.inheritance.transaction;
 
 
-import oop.inheritance.model.Transaction;
+import oop.inheritance.model.TransactionDTO;
 
 public interface IBuilderTransaction {
-    Transaction build();
+    TransactionDTO build();
 }

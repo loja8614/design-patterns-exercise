@@ -5,16 +5,21 @@ import oop.inheritance.operation.Printer;
 public class IngenicoPrinter implements Printer {
     private oop.library.ingenico.services.IngenicoPrinter ingenicoPrinter = new oop.library.ingenico.services.IngenicoPrinter();
 
-    public IngenicoPrinter() {
+    private IngenicoPrinter() {
 
     }
 
-    private static final class UniqueInstanceHolder {
-        private static final IngenicoPrinter uniqueInstance = new IngenicoPrinter();
-    }
+    private static IngenicoPrinter uniqueInstance;
 
     public static IngenicoPrinter getInstance() {
-        return UniqueInstanceHolder.uniqueInstance;
+        if (uniqueInstance == null) {
+            synchronized (IngenicoPrinter.class) {
+                if (uniqueInstance == null) {
+                    uniqueInstance = new IngenicoPrinter();
+                }
+            }
+        }
+        return uniqueInstance;
     }
 
     @Override
