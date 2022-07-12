@@ -9,12 +9,28 @@ import org.modelmapper.ModelMapper;
 public class ConverterMapper {
     private ModelMapper modelMapper = new ModelMapper();
 
-
-    public CardDTO toCardDTO (Card card){
-        return  modelMapper.map(card,CardDTO.class);
+    private ConverterMapper() {
     }
 
-    public Transaction toTransaction (TransactionDTO transactionResponseDTO){
-        return modelMapper.map(transactionResponseDTO,Transaction.class);
+    private static ConverterMapper uniqueInstance;
+
+    public static ConverterMapper getInstance() {
+        if (uniqueInstance == null) {
+            synchronized (ConverterMapper.class) {
+                if (uniqueInstance == null) {
+                    uniqueInstance = new ConverterMapper();
+                }
+            }
+        }
+        return uniqueInstance;
+    }
+
+
+    public CardDTO toCardDTO(Card card) {
+        return modelMapper.map(card, CardDTO.class);
+    }
+
+    public Transaction toTransaction(TransactionDTO transactionResponseDTO) {
+        return modelMapper.map(transactionResponseDTO, Transaction.class);
     }
 }

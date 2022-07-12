@@ -9,8 +9,7 @@ import oop.library.ingenico.services.IngenicoGPS;
 
 public class IngenicoGps implements Communication {
     private IngenicoGPS gps = new IngenicoGPS();
-    private ConverterIngenico transactionMapped = new ConverterIngenico();
-    private ConverterMapper converterMapper = new ConverterMapper();
+    //private ConverterIngenico transactionMapped = new ConverterIngenico();
 
     private IngenicoGps() {
     }
@@ -36,6 +35,7 @@ public class IngenicoGps implements Communication {
     @Override
     public void send(TransactionDTO transactionDto) {
         //gps.send(transactionMapped.convertTransactionDtoToTransaction(transactionDto));
+        ConverterMapper converterMapper = ConverterMapper.getInstance();
         gps.send(converterMapper.toTransaction(transactionDto));
     }
 
