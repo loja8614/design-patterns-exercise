@@ -1,4 +1,4 @@
-package oop.inheritance.data;
+package oop.inheritance.enums;
 
 public enum SupportedTerminal {
     INGENICO,

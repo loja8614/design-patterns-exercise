@@ -1,7 +1,7 @@
 package oop.inheritance;
 
-import oop.inheritance.data.CommunicationType;
-import oop.inheritance.data.SupportedTerminal;
+import oop.inheritance.enums.CommunicationType;
+import oop.inheritance.enums.SupportedTerminal;
 import oop.inheritance.factories.*;
 
 public class Main {

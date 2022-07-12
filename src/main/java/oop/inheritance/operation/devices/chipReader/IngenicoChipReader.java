@@ -2,12 +2,14 @@ package oop.inheritance.operation.devices.chipReader;
 
 import oop.inheritance.model.CardDTO;
 import oop.inheritance.model.mapper.ConverterIngenico;
+import oop.inheritance.model.mapper.ConverterMapper;
 import oop.inheritance.operation.ChipReader;
 
 
 public class IngenicoChipReader implements ChipReader {
     private oop.library.ingenico.services.IngenicoChipReader chipReader = new oop.library.ingenico.services.IngenicoChipReader();
-    private ConverterIngenico cardMapped = new ConverterIngenico();
+    //private ConverterIngenico cardMapped = new ConverterIngenico();
+    private ConverterMapper cardMapped1=new ConverterMapper();
     private IngenicoChipReader(){
 
     }
@@ -26,6 +28,7 @@ public class IngenicoChipReader implements ChipReader {
 
     @Override
     public CardDTO readCard() {
-        return cardMapped.convertCardtoCardDto(chipReader.readCard());
+        //return cardMapped.convertCardtoCardDto(chipReader.readCard());
+        return cardMapped1.toCardDTO(chipReader.readCard());
     }
 }

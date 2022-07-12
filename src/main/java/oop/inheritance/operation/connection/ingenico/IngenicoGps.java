@@ -1,6 +1,7 @@
 package oop.inheritance.operation.connection.ingenico;
 
 import oop.inheritance.model.mapper.ConverterIngenico;
+import oop.inheritance.model.mapper.ConverterMapper;
 import oop.inheritance.operation.connection.Communication;
 import oop.inheritance.model.TransactionDTO;
 import oop.inheritance.model.TransactionResponseDTO;
@@ -9,16 +10,18 @@ import oop.library.ingenico.services.IngenicoGPS;
 public class IngenicoGps implements Communication {
     private IngenicoGPS gps = new IngenicoGPS();
     private ConverterIngenico transactionMapped = new ConverterIngenico();
+    private ConverterMapper converterMapper = new ConverterMapper();
 
+    private IngenicoGps() {
+    }
 
-    private IngenicoGps(){}
-    private static  IngenicoGps uniqueInstance ;
+    private static IngenicoGps uniqueInstance;
 
     public static IngenicoGps getInstance() {
-        if (uniqueInstance ==null){
-            synchronized (IngenicoGps.class){
-                if(uniqueInstance==null){
-                    uniqueInstance=new IngenicoGps();
+        if (uniqueInstance == null) {
+            synchronized (IngenicoGps.class) {
+                if (uniqueInstance == null) {
+                    uniqueInstance = new IngenicoGps();
                 }
             }
         }
@@ -31,13 +34,14 @@ public class IngenicoGps implements Communication {
     }
 
     @Override
-    public void send(TransactionDTO transaction) {
-        gps.send(transactionMapped.convertTransactionDtoToTransaction(transaction));
+    public void send(TransactionDTO transactionDto) {
+        //gps.send(transactionMapped.convertTransactionDtoToTransaction(transactionDto));
+        gps.send(converterMapper.toTransaction(transactionDto));
     }
 
     @Override
     public TransactionResponseDTO receive() {
-        return  new TransactionResponseDTO(gps.receive().isApproved(),gps.receive().getHostReference());
+        return new TransactionResponseDTO(gps.receive().isApproved(), gps.receive().getHostReference());
     }
 
     @Override

@@ -1,6 +1,6 @@
 package oop.inheritance.model;
 
-import oop.inheritance.data.EntryMode;
+import oop.inheritance.enums.EntryMode;
 
 public class CardBuilderDTO {
     private String account;

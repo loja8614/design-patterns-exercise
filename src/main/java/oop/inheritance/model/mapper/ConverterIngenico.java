@@ -1,7 +1,7 @@
 package oop.inheritance.model.mapper;
 
 import oop.inheritance.model.CardDTO;
-import oop.inheritance.data.EntryMode;
+import oop.inheritance.enums.EntryMode;
 import oop.inheritance.model.ExpirationDateDTO;
 import oop.inheritance.model.TransactionDTO;
 import oop.library.ingenico.model.Card;

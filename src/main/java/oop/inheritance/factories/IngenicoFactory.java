@@ -1,6 +1,6 @@
 package oop.inheritance.factories;
 
-import oop.inheritance.data.CommunicationType;
+import oop.inheritance.enums.CommunicationType;
 import oop.inheritance.operation.ChipReader;
 import oop.inheritance.operation.Display;
 import oop.inheritance.operation.Printer;

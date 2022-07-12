@@ -1,6 +1,6 @@
 package oop.inheritance;
 
-import oop.inheritance.data.CommunicationType;
+import oop.inheritance.enums.CommunicationType;
 import oop.inheritance.factories.TerminalFactory;
 import oop.inheritance.model.CardDTO;
 import oop.inheritance.operation.ChipReader;
@@ -25,7 +25,7 @@ public class Application {
         this.communicationType = communicationType;
     }
 
-    public void showMenu() {
+    void showMenu() {
         Display display = factory.getDisplay();
 
         display.showMessage(5, 5, "MENU");
@@ -35,13 +35,13 @@ public class Application {
         display.showMessage(5, 23, "4. CONFIGURACION");
     }
 
-    public String readKey() {
+    String readKey() {
         KeyBoard keyBoard = factory.getKeyBoard();
         return keyBoard.getKeyChar();
     }
 
 
-    public void doSale() {
+    void doSale() {
         Display display = factory.getDisplay();
         KeyBoard keyBoard = factory.getKeyBoard();
         ChipReader chipReader = factory.chipReader();
@@ -96,7 +96,7 @@ public class Application {
 
         Communication communication = factory.getConnection(communicationType);
 
-        TransactionResponseDTO transactionResponse = null;
+        TransactionResponseDTO transactionResponse;
         communication.open();
         communication.send(transaction);
         transactionResponse = communication.receive();
@@ -105,16 +105,16 @@ public class Application {
 
     }
 
-    public void doRefund() {
+    void doRefund() {
     }
 
-    public void printReport() {
+    void printReport() {
     }
 
-    public void showConfiguration() {
+    void showConfiguration() {
     }
 
-    public void clearScreen() {
+    void clearScreen() {
         Display display = factory.getDisplay();
         display.clear();
     }
