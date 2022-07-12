@@ -1,14 +1,14 @@
 package oop.inheritance.operation.connection.verifone690;
 
+import oop.inheritance.model.mapper.ConverterVerifone;
 import oop.inheritance.operation.connection.Communication;
 import oop.inheritance.model.TransactionDTO;
 import oop.inheritance.model.TransactionResponseDTO;
-import oop.inheritance.transaction.Serializer;
 import oop.library.vx690.VerifoneVx690Modem;
 
 public class Verifone690Modem implements Communication {
     private VerifoneVx690Modem verifoneVx690Modem = new VerifoneVx690Modem();
-
+    private ConverterVerifone modelMapper = new ConverterVerifone();
     private Verifone690Modem() {
     }
 
@@ -32,12 +32,12 @@ public class Verifone690Modem implements Communication {
 
     @Override
     public void send(TransactionDTO transaction) {
-        verifoneVx690Modem.send(Serializer.serialize(transaction));
+        verifoneVx690Modem.send(modelMapper.transactionToByte(transaction));
     }
 
     @Override
     public TransactionResponseDTO receive() {
-        return (TransactionResponseDTO) Serializer.deserialize(verifoneVx690Modem.receive());
+        return modelMapper.toTransactionResponseDTO(verifoneVx690Modem.receive());
     }
 
     @Override

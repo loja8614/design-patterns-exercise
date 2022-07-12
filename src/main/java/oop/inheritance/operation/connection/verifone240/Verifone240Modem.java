@@ -1,14 +1,15 @@
 package oop.inheritance.operation.connection.verifone240;
 
+import oop.inheritance.model.mapper.ConverterVerifone;
 import oop.inheritance.operation.connection.Communication;
 import oop.inheritance.model.TransactionDTO;
 import oop.inheritance.model.TransactionResponseDTO;
-import oop.inheritance.transaction.Serializer;
 import oop.library.v240m.*;
 
 public class Verifone240Modem implements Communication {
 
     private VerifoneV240mModem verifoneV240mModem = new VerifoneV240mModem();
+    private ConverterVerifone modelMapper = new ConverterVerifone();
 
     private Verifone240Modem() {
 
@@ -34,12 +35,12 @@ public class Verifone240Modem implements Communication {
 
     @Override
     public void send(TransactionDTO transaction) {
-        verifoneV240mModem.send(Serializer.serialize(transaction));
+        verifoneV240mModem.send(modelMapper.transactionToByte(transaction));
     }
 
     @Override
     public TransactionResponseDTO receive() {
-        return (TransactionResponseDTO) Serializer.deserialize(verifoneV240mModem.receive());
+        return modelMapper.toTransactionResponseDTO(verifoneV240mModem.receive());
     }
 
     @Override

@@ -1,6 +1,8 @@
 package oop.inheritance.model;
 
 import oop.inheritance.data.EntryMode;
+import oop.library.ingenico.model.Card;
+import oop.library.ingenico.model.ExpirationDate;
 
 public class CardDTO {
     private final String account;
@@ -28,4 +30,5 @@ public class CardDTO {
     public static CardBuilderDTO builder() {
         return new CardBuilderDTO();
     }
+
 }

@@ -1,14 +1,14 @@
 package oop.inheritance.operation.connection.verifone690;
 
+import oop.inheritance.model.mapper.ConverterVerifone;
 import oop.inheritance.operation.connection.Communication;
 import oop.inheritance.model.TransactionDTO;
 import oop.inheritance.model.TransactionResponseDTO;
-import oop.inheritance.transaction.Serializer;
 import oop.library.vx690.VerifoneVx690GPS;
 
 public class Verifone690Gps implements Communication {
     private VerifoneVx690GPS verifoneVx690GPS = new VerifoneVx690GPS();
-
+    private ConverterVerifone modelMapper = new ConverterVerifone();
     private Verifone690Gps() {
 
     }
@@ -33,12 +33,12 @@ public class Verifone690Gps implements Communication {
 
     @Override
     public void send(TransactionDTO transaction) {
-        verifoneVx690GPS.send(Serializer.serialize(transaction));
+        verifoneVx690GPS.send(modelMapper.transactionToByte(transaction));
     }
 
     @Override
     public TransactionResponseDTO receive() {
-        return (TransactionResponseDTO) Serializer.deserialize(verifoneVx690GPS.receive());
+        return modelMapper.toTransactionResponseDTO(verifoneVx690GPS.receive());
     }
 
     @Override
