@@ -1,7 +1,7 @@
 package oop.inheritance.factories;
 
 import oop.inheritance.enums.CommunicationType;
-import oop.inheritance.operation.ChipReader;
+import oop.inheritance.operation.CardProvider;
 import oop.inheritance.operation.Display;
 import oop.inheritance.operation.KeyBoard;
 import oop.inheritance.operation.Printer;
@@ -9,7 +9,7 @@ import oop.inheritance.operation.connection.Communication;
 import oop.inheritance.operation.connection.verifone690.Verifone690Ethernet;
 import oop.inheritance.operation.connection.verifone690.Verifone690Gps;
 import oop.inheritance.operation.connection.verifone690.Verifone690Modem;
-import oop.inheritance.operation.devices.chipReader.Verifone690ChipReader;
+import oop.inheritance.operation.devices.reader.Verifone690CardProvider;
 import oop.inheritance.operation.devices.keyBoard.Verifone690KeyBoard;
 import oop.inheritance.operation.devices.displays.Verifone690Display;
 import oop.inheritance.operation.devices.print.Verifone690Printer;
@@ -31,8 +31,8 @@ public class Verifone690Factory extends TerminalFactory {
     }
 
     @Override
-    public ChipReader chipReader() {
-        return Verifone690ChipReader.getInstance();
+    public CardProvider cardReader() {
+        return Verifone690CardProvider.getInstance();
     }
 
     @Override

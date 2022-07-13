@@ -3,13 +3,12 @@ package oop.inheritance;
 import oop.inheritance.enums.CommunicationType;
 import oop.inheritance.factories.TerminalFactory;
 import oop.inheritance.model.CardDTO;
-import oop.inheritance.operation.ChipReader;
+import oop.inheritance.operation.CardProvider;
 import oop.inheritance.operation.Display;
 import oop.inheritance.operation.KeyBoard;
 import oop.inheritance.operation.Printer;
 import oop.inheritance.operation.connection.Communication;
 import oop.inheritance.model.TransactionDTO;
-import oop.inheritance.transaction.CardProvider;
 import oop.inheritance.transaction.TransactionBuilder;
 import oop.inheritance.model.TransactionResponseDTO;
 
@@ -44,38 +43,25 @@ public class Application {
     void doSale() {
         Display display = factory.getDisplay();
         KeyBoard keyBoard = factory.getKeyBoard();
-        ChipReader chipReader = factory.chipReader();
+        CardProvider cardProvider = factory.cardReader();
 
-        CardProvider cardProvider = card -> {
-            do {
+        cardProvider.readCard(card->{
+            display.clear();
+            display.showMessage(5, 20, "Capture monto:");
 
-                card = chipReader.readCard();
+            String amount = keyBoard.readLine(); //Amount with decimal point as string
 
-                if (card == null) {
-                    card = chipReader.readCard();
-                }
+            TransactionBuilder builder = new TransactionBuilder(card);
+            TransactionDTO transaction = builder.amountInCents(Integer.parseInt(amount.replace(".", ""))).localTime(LocalDateTime.now()).build();
+            TransactionResponseDTO response = sendSale(transaction, communicationType);
 
-            } while (card == null);
-            return card;
-        };
-
-        CardDTO readCard = cardProvider.readCard(chipReader.readCard());
-
-        display.clear();
-        display.showMessage(5, 20, "Capture monto:");
-
-        String amount = keyBoard.readLine(); //Amount with decimal point as string
-
-        TransactionBuilder builder = new TransactionBuilder(readCard);
-        TransactionDTO transaction = builder.amountInCents(Integer.parseInt(amount.replace(".", ""))).localTime(LocalDateTime.now()).build();
-        TransactionResponseDTO response = sendSale(transaction, communicationType);
-
-        if (response.isApproved()) {
-            display.showMessage(5, 25, "APROBADA");
-            printReceipt(transaction);
-        } else {
-            display.showMessage(5, 25, "DENEGADA");
-        }
+            if (response.isApproved()) {
+                display.showMessage(5, 25, "APROBADA");
+                printReceipt(transaction);
+            } else {
+                display.showMessage(5, 25, "DENEGADA");
+            }
+        });
 
     }
 

@@ -2,7 +2,7 @@ package oop.inheritance.factories;
 
 import oop.inheritance.enums.CommunicationType;
 import oop.inheritance.enums.SupportedTerminal;
-import oop.inheritance.operation.ChipReader;
+import oop.inheritance.operation.CardProvider;
 import oop.inheritance.operation.Display;
 import oop.inheritance.operation.KeyBoard;
 import oop.inheritance.operation.Printer;
@@ -30,7 +30,7 @@ public abstract class TerminalFactory  {
 
     public abstract Printer printer();
 
-    public abstract ChipReader chipReader();
+    public abstract CardProvider cardReader();
 
     public abstract Communication getConnection(CommunicationType communicationType);
 

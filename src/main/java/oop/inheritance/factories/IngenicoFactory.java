@@ -1,7 +1,7 @@
 package oop.inheritance.factories;
 
 import oop.inheritance.enums.CommunicationType;
-import oop.inheritance.operation.ChipReader;
+import oop.inheritance.operation.CardProvider;
 import oop.inheritance.operation.Display;
 import oop.inheritance.operation.Printer;
 import oop.inheritance.operation.connection.Communication;
@@ -9,7 +9,7 @@ import oop.inheritance.operation.connection.Communication;
 import oop.inheritance.operation.connection.ingenico.IngenicoEthernet;
 import oop.inheritance.operation.connection.ingenico.IngenicoGps;
 import oop.inheritance.operation.connection.ingenico.IngenicoModem;
-import oop.inheritance.operation.devices.chipReader.IngenicoChipReader;
+import oop.inheritance.operation.devices.reader.IngenicoCardProvider;
 import oop.inheritance.operation.devices.keyBoard.IngenicoKeyBoard;
 import oop.inheritance.operation.devices.displays.IngenicoDisplay;
 import oop.inheritance.operation.KeyBoard;
@@ -32,8 +32,8 @@ public class IngenicoFactory extends TerminalFactory{
     }
 
     @Override
-    public ChipReader chipReader() {
-        return IngenicoChipReader.getInstance();
+    public CardProvider cardReader() {
+        return IngenicoCardProvider.getInstance();
     }
 
     @Override
